@@ -59,14 +59,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y openvpn3 dbus-x11
 
-      - name: Start Open VPN 3
-        run: |
-          #service dbus start
-          openvpn3 session-start --config .github/vpn/openvpn-eu2-staging.ovpn
-          nslookup staging.bk.one.network
-          nslookup portal-gb-staging.bk.one.network
-          curl https://staging.bk.one.network
-          curl https://api-gb-staging.bk.one.network/
+      # - name: Start Open VPN 3
+      #   run: |
+      #     #service dbus start
+      #     openvpn3 session-start --config .github/vpn/openvpn-eu2-staging.ovpn
+      #     nslookup staging.bk.one.network
+      #     nslookup portal-gb-staging.bk.one.network
+      #     curl https://staging.bk.one.network
+      #     curl https://api-gb-staging.bk.one.network/
 
       - run: |
           echo This job does specify a container.
