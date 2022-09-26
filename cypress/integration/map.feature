@@ -35,8 +35,16 @@ Feature: Works on the map
     Then the callout title is displayed
     And the callout header details is displayed
 
-  # Scenario: Test against address
-  #   When I pan the map to address "7 Ashtree Close, Bromley, Orpington, BR6 7FH"
-  #   Then the map should be centered on "7 Ashtree Close, Bromley, Orpington, BR6 7FH"
-  #   And I set the map's zoom level to 20
-  #   Then there should be markers on the map
+  Scenario: Open Car Park callout
+    When I click on the data layer icon
+    And I click the "Driver information" option on the list
+    Then the "Car parks" option is "displayed" on the data layers-menu
+    And I close the data Layers
+    When I disable all duffys open layers
+    And I pan the map to coordinate 51.449465049715684,-2.60214376
+    And I set the map's zoom level to 19
+    And I click the "Driver information" option on the list
+    And I enable the "Car parks" layer
+    And I click the center of the map
+    And the callout should open
+    Then the callout title is displayed

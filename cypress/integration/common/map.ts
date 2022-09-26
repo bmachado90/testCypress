@@ -169,6 +169,7 @@ Then("the map's position should be {float},{float}", (latitude, longitude) => {
     .then((coords) => {
       expect(coords.lat).be.closeTo(latitude, 0.00001)
       expect(coords.lng).be.closeTo(longitude, 0.00001)
+
     })
 })
 
@@ -217,6 +218,7 @@ When("I position the map over a random marker", () => {
 })
 
 When("I click the center of the map", () => {
+  cy.wait(3000)
   cy.window().then((win) => {
     getGoogleMap().then((map) => {
       const center = map.getCenter()
@@ -233,7 +235,7 @@ When("I click the center of the map", () => {
 })
 
 Then("the callout should open", () => {
-  cy.get(".rwCallout_content").should("exist")
+  cy.get(".rwCallout_content",{ timeout: 30000 }).should("exist")
 })
 
 Then("the callout title is displayed", () => {
@@ -264,4 +266,20 @@ Then("the callout Callout_icon is displayed", () => {
   cy.get(".rwCallout_icon").should("exist")
 })
 
+Then("I visiit {string}", (url) => {
+  cy.visit(url)
+})
+
+Then("abro o callout", () => {
+  cy.get(".rwCallout_mainWrapper")
+        .should("exist", { force: true })
+  cy.wait(1000)
+})
+
+Then ("I close the data Layers",() => {
+  cy.get(".css-86wdic").should("exist")
+  cy.wait(500)
+  cy.get(".css-86wdic").click({force: true})
+  cy.wait(500)
+})
 

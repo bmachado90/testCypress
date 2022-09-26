@@ -10,6 +10,7 @@ Then("Sign in should not happen", () => {
 })
 
 Then("Sign in should fail", () => {
+  cy.wait(2000)
   cy.get("@signin").its("response.statusCode").should("eq", 401)
 })
 

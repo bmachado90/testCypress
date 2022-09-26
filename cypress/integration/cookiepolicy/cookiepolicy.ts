@@ -10,9 +10,9 @@ Given("the cookie container is {string}", (displayed) =>
   displayed == "displayed" ? (is_element_exist = "exist") : (is_element_exist = "not.exist")
   cy.get(".erw-gdpr-notice-container").should(is_element_exist, {
     force: true,
-
-
+  })
 })
+
 
 Then("the cookie container is cleared and {string}", (displayed) =>
 {
@@ -27,6 +27,7 @@ When("I click on the cookie preferences button",() =>
 {
 
   cy.get('.col > p').click({ force: true });
+  //cy.get(".erw-gdpr-footer-right > .btn").invoke('removeAttr', 'target').click({ force: true });
   cy.get(".erw-gdpr-footer-right > .btn").click({ force: true });
   cy.visit('/legal/privacy-and-cookies-policy?lang=en-GB')
 
@@ -50,7 +51,7 @@ Then("text {string} is displayed on the page",(text) => {
    cy.get(
     (".col > h1"),
   ).should('have.text', text)
-  })
+})
 
 
 
@@ -61,6 +62,7 @@ Then("text {string} is displayed on the page",(text) => {
 
   displayed == "displayed" ? (is_element_exist = "exist") : (is_element_exist = "not.exist")
   cy.get(".erw-gdpr-footer-left > .btn").should(is_element_exist, {force: true})
+})
 
 When("I click on the accept recommended settings", () =>
 {
@@ -79,7 +81,7 @@ Then("the user preferences is turned on by default",() =>
 
   cy.get(":nth-child(12) > b").should('be.visible')
   cy.get("#erw-privacy-functional-checkbox").should('be.checked')
-//
+
 })
 Then("the Analytics & Statistics cookies is turned on by default",() =>
 {
@@ -122,7 +124,8 @@ When("I turn off Analytics & Statistics cookies",() =>
 })
 When("I click on legal information",() =>
 {
-  cy.get(".row > .text-right > a").scrollIntoView().click({force: true})
+  cy.get("#on-omnibox > div > div.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.css-encmhb > div.MuiCollapse-root.MuiCollapse-vertical.MuiCollapse-entered.css-c4sutr > div > div > div > div.MuiBox-root.css-1nmkydy > div.css-yaovbq > a")
+    .scrollIntoView().click({force: true})
   cy.visit("/legal?lang=en-GB")
   cy.url().should('include', '/legal?lang=en-GB');
 
@@ -134,5 +137,51 @@ Then("I can navigate to privacy and cookie policy from the page",() =>
    cy.get(":nth-child(4) > :nth-child(1) > a").click()
    cy.go('back')
 })
+
+Then("I Deselect User preferences", () =>
+{
+  cy.get("#erw-privacy-functional-checkbox").click()
+
 })
+
+Then ("The Save Cookie Preferences button is enabled", () => {
+  cy.get('#erw-save-privacy-prefs').should('be.visible')
+
 })
+
+Then("The message is displayed", () => {
+  //cy.get("#modalCookiesPrefSaved > div > div > div.modal-body").then(($el) => {
+  //  const text = $el.text();
+  //  cy.log("teste " + text)
+  //  expect(text).to.contain(frase);
+  //})
+  cy.get("#modalCookiesPrefSaved > div > div > div.modal-body").should('not.be.empty')
+  cy.get('#modalCookiesPrefSaved > div > div > div.modal-footer > button').click()
+  cy.wait(1000)
+})
+
+Then("I refresh the page", () => {
+  cy.reload()
+})
+
+Then("I Deselect Analytics & Statistics cookies", () =>
+{
+  cy.get("#erw-privacy-analytics-checkbox").click()
+
+})
+
+Then("I Tick User preferences and Analytics & Statistics cookies", () =>
+{
+  cy.get("#erw-privacy-functional-checkbox").click()
+  cy.get("#erw-privacy-analytics-checkbox").click()
+
+})
+
+
+Then("I click on the data layer button", () =>
+{
+  cy.get(".css-1e0pwxh").should("exist")
+  cy.get(".css-1e0pwxh").click({force: true})
+  cy.wait(500)
+})
+

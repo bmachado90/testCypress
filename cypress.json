@@ -1,6 +1,5 @@
 {
-  "baseUrl": "https://staging.bk.one.network",
-  "projectId": "puujet",
+  "baseUrl": "https://one.network",
   "numTestsKeptInMemory": 0,
   "video": false,
   "testFiles": [

@@ -16,7 +16,6 @@ And alert is "displayed" in the menu
 And user management is "displayed" in the menu
 And sign out is "displayed" in the menu
 
-
 Scenario: Account Settings - modules available
 When I input "DuffyS" credentials and sign in
 Then I should be in the "TM" page
@@ -25,8 +24,10 @@ Then my account is "displayed" in the menu
 When I click on user menu
 When I click on My Account
 Then the account settings fields should be active
-And the discard button should be enabled
+And the home button should be enabled
 And the save button should be enabled
+And the application settings should be enable
+And i click on application settings
 When I click on the Select default Module
 Then the Reports module is displayed
 And the Route Monitor module is displayed
@@ -55,7 +56,6 @@ And I click on Change Password
 And I can enter email address
 Then the request email button is enabled
 
- @stg
  Scenario: Account Settings - Route Manager
  When I input hcd "hcd_user" credentials and sign in
  Then I should be signed in as "hcd_user"

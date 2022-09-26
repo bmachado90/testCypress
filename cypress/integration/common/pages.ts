@@ -37,7 +37,31 @@ export const TM: Page = {
   waitStrategies: [WaitStrategy.PRELOADER],
 } as const
 
-const ALL_PAGES: ReadonlyArray<Page> = [BLANK, HOME, SIGN_IN, TM] as const
+export const CM: Page = {
+  name: "CM",
+  paths: ["/cm"],
+  waitStrategies: [WaitStrategy.PRELOADER],
+} as const
+
+export const CAC: Page = {
+  name: "CAC",
+  paths: ["/cac"],
+  waitStrategies: [WaitStrategy.PRELOADER],
+} as const
+
+export const RM: Page = {
+  name: "Route_manager",
+  paths: ["/route-manager"],
+  waitStrategies: [WaitStrategy.PRELOADER],
+} as const
+
+export const RP: Page = {
+  name: "Report",
+  paths: ["/report"],
+  waitStrategies: [WaitStrategy.PRELOADER],
+} as const
+
+const ALL_PAGES: ReadonlyArray<Page> = [BLANK, HOME, SIGN_IN, TM, CM,CAC,RM,RP] as const
 
 export function getPageByName(pageName: string): Page {
   const page = ALL_PAGES.find((p) => p.name.toLowerCase() == pageName.toLowerCase())

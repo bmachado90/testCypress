@@ -66,7 +66,7 @@ When("I click on user menu", () => {
 })
 
 When("I click on user management", () => {
-  cy.get('[href="'+Cypress.config().baseUrl+'/user-management"]').click()
+  cy.get("li > div > a:nth-child(5)").click({ force: true })
 })
 
 When("feature steps", () => {
@@ -74,7 +74,6 @@ When("feature steps", () => {
 })
 
 When("I select any active user and open", () => {
-  cy.get(':nth-child(1) > #td-user-list-name', { timeout: 10000 })
   cy.get(":nth-child(1) > #td-user-list-name").click({ force: true })
 })
 
@@ -83,7 +82,6 @@ When("I select any inactive user and open", () => {
 })
 
 When("I select any pending user and open", () => {
-  cy.get(':nth-child(11) > #td-user-list-email', { timeout: 10000 }).should("exist")
   cy.get(":nth-child(11) > #td-user-list-email").click({ force: true })
 })
 

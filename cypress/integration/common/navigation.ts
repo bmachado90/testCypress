@@ -76,3 +76,9 @@ Then("I should be in the {string} page", (pageName) => {
 
   waitForPageToLoad(page)
 })
+
+Then("I click on UK button", () => {
+  cy.get("#on-region-switch > a.ons-region.ons-region-active").eq(1).click({ force: true })
+  cy.get('#on-region-switch > a.ons-region.ons-region-active', { timeout: 10000 })
+})
+

@@ -2,15 +2,22 @@
 import { When, Then } from "cypress-cucumber-preprocessor/steps"
 
 When("I click on the search box to select dates", () => {
-  cy.get("#ons-quick-picker").click({ force: true })
+  cy.get(".css-ijzx8e").click({ force: true })
+  cy.url().then((url) => {
+    cy.task('log', 'URL: '+ url)
+  })
 })
 
 When("I click the date search {string} option on the list", (dateOption) => {
-  cy.get('[data-value="' + dateOption + '"]').click({ force: true })
+  //cy.get('[data-value="' + dateOption + '"]').click({ force: true })
+  cy.get(".css-1uzmcsd")
+  .contains(dateOption)
+  .click({ force: true })
+
 })
 
 When("I click in the search item text box to type", () => {
-  cy.get(".ons-tt-input").click({ force: true })
+  cy.get(".css-mnn31").click({ force: true })
 })
 
 When("the first result is {string}", (dateOption) => {
@@ -21,9 +28,10 @@ When("a dropdown list of possible locations is displayed", (option) => {})
 
 When("the list includes the search item", (option) => {})
 
-When("I select item {string} from the dropdown list", (location) => {
+When("I select item {string} from the dropdown list", (location) => { //
   cy.wait(3000)
-  cy.get('.ons-tt-menu').find('.list-group-item').contains(location).click({ force: true })
+  cy.get(".css-8atqhb").should("exist")
+  cy.get('.css-3blc9x').contains(location).click({ force: true })
   cy.wait(1000)
 })
 
@@ -50,10 +58,11 @@ Then("the signin window is {string} on the map", (displayed) => {
 })
 
 When("I type in the search box a location {string}", (location) => {
-  //cy.get(".ons-tt-input").clear()
-  cy.get(".ons-tt-input").type(location,{ force: true })
+  cy.get(".css-mnn31").clear({ force: true })
+  cy.wait(500)
+  cy.get(".css-mnn31").type(location,{ force: true })
   cy.wait(2000)
-  cy.get(".ons-tt-input").click({ force: true })
+  cy.get(".css-mnn31").click({ force: true })
 })
 
 When("the location {string} is {string} on the list", (text, displayed) => {

@@ -8,7 +8,7 @@ Background: Open Data Layer
     When I click on the data layer icon
 
   Scenario: Check if version is present
-    Then the version number is displayed and it matches 'Version: e2.17.0'
+    Then the version number is displayed and it matches 'Version: e2.18.0'
 
   Scenario: Click on Legal information
     And I see the 'Legal Information' label

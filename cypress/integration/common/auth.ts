@@ -51,7 +51,6 @@ function inputCredentials(username: string, password: string): void {
   if (username) {
     cy.get("#j_username").type(username)
   }
-  cy.wait(500)
   cy.get("#j_password").clear()
   if (password) {
     cy.get("#j_password").type(password)
@@ -80,6 +79,10 @@ When("I attempt to sign in with no username and password {string}", (password) =
   inputCredentials("", password)
 })
 
+When("I attempt to sign in with username {string} and password {string}", (username,password) => {
+  inputCredentials(username, password)
+})
+
 When("I attempt to sign in with no credentials", () => {
   inputCredentials("", "")
 })
@@ -100,7 +103,7 @@ Then("I should see the Sign in button", () => {
       cy.get(".ons-mobile-menu-toggle").click()
       cy.get("#on-mobile-menu-container")
         .should("be.visible")
-        .find('a[href="#sign-in"]')
+        .find('a[href="/accounts/#sign-in"]')
         .should("be.visible")
     } else {
       cy.get("#on-sign-in").should("be.visible")
@@ -150,6 +153,37 @@ Given("I'm not signed in", () => {
   })
 })
 
+When("I input {string} new credentials and sign in", (username) => {
+  newinputUserCredentialsAndWait(username)
+})
+
+function newinputUserCredentialsAndWait(username: string): void {
+  getUserPassword(username).then((password) => {
+    newinputCredentialsAndWait(username, password)
+  })
+}
+
+function newinputCredentialsAndWait(username: string, password: string): void {
+  newinputCredentials(username, password)
+  cy.get("#on-active-module-menu > ul > li > a", { timeout: 30000 }).should("be.visible")
+}
+
+function newinputCredentials(username: string, password: string): void {
+  cy.intercept("POST", "API_GB_URL").as("signin")
+
+  cy.get("#j_username").clear()
+  if (username) {
+    cy.get("#j_username").type(username)
+  }
+  cy.wait(500)
+  cy.get("#j_password").clear()
+  if (password) {
+    cy.get("#j_password").type(password)
+  }
+  cy.get("button[type=submit]").click()
+}
+
+
 When("I click the Sign in button", () => {
   checkIfIsMobile((mobile) => {
     if (mobile) {
@@ -178,7 +212,7 @@ When("The password field is visible.", () => {
 })
 
 When("the public page is visible.", () => {
-  cy.wait(4000)
+  cy.get(".pr-2.truncate > p", { timeout: 30000 }).should("be.visible")
   cy.get(".pr-2.truncate > p").should("be.visible").contains("Public User")
 })
 

@@ -17,9 +17,7 @@ When("I click on user menu", () =>
   When("I click on My Account",() =>
   {
 
-    cy.get('[href="'+Cypress.config().baseUrl+'/account/#settings"]').click({ force: true})
-
-
+    cy.get('[href="'+Cypress.config().baseUrl+'/account"]').click({ force: true})
   })
 
   Then("the account settings fields should be active",() =>
@@ -31,24 +29,46 @@ When("I click on user menu", () =>
     cy.get('#app-select').should('not.be.empty')
 
   })
+
+  Then("the home button should be enabled",() =>
+  {
+    cy.get('.css-qk7qjk', { timeout: 30000 }).should("exist",{ force: true })
+    cy.get('.css-qk7qjk').should('be.visible')
+
+  })
+  Then("the save button should be enabled",() =>
+  {
+    cy.get('.css-122y48r', { timeout: 30000 }).should("exist",{ force: true })
+    cy.get('.css-122y48r').should('be.visible')
+
+  })
+
+
   Then("the discard button should be enabled",() =>
   {
     cy.get('#btn-discard').should('be.visible')
     cy.get('#btn-discard > .ons-mdi').should('be.visible')
 
   })
-  Then("the save button should be enabled",() =>
+
+  Then("the application settings should be enable",() =>
   {
+    cy.get('.css-1ol6jpm', { timeout: 30000 }).should("exist",{ force: true })
+    cy.get('.css-1ol6jpm').should('be.visible')
 
-    cy.get(':nth-child(2) > .btn').should('be.visible')
+  })
 
+  Then("i click on application settings",() =>
+  {
+    cy.get('.css-1ol6jpm').click({ force: true })
+    cy.wait(500)
   })
 
   Then("I can view email settings",() =>
   {
 
     cy.get('#form-email-alerts > :nth-child(1) > .form-control').should('not.be.empty')
-    cy.wait(3000)
+    cy.get(':nth-child(2) > .mt-1', { timeout: 30000 }).should("exist",{ force: true })
     cy.get(':nth-child(2) > .mt-1').contains('Description')
     cy.get(':nth-child(3) > .mt-1').contains('Who are you')
     cy.get(':nth-child(4) > .mt-1').contains('Get alerts on')
@@ -76,11 +96,19 @@ When("I click on user menu", () =>
 
   })
 
+  Then("the frequency option weekly is checked",() =>
+  {
+    cy.get('.d-flex > :nth-child(1) > .form-check-input').should('be.checked')
+
+  })
+
   Then("the frequency option weekly is unchecked",() =>
   {
     cy.get('.d-flex > :nth-child(2) > .form-check-input').should('not.be.checked')
 
   })
+
+
   Then("the frequency option monthlies is unchecked",() =>
   {
     cy.get('.d-flex > :nth-child(3) > .form-check-input').should('not.be.checked')
@@ -106,7 +134,7 @@ When("I click on user menu", () =>
   When("I click on Change Password",() =>
   {
 
-    cy.get('[href="'+Cypress.config().baseUrl+'/account/#reset-password"]').click({ force: true})
+    cy.get('[href="'+Cypress.config().baseUrl+'/account/#/reset-password"]').click({ force: true})
 
   })
 
@@ -120,28 +148,31 @@ When("I click on user menu", () =>
   When("I click on the Select default Module",() =>
   {
 
-    cy.get('#app-select').should('be.visible')
+    cy.get('.css-17ciiq').click({ force: true})
 
 
   })
 
 Then("the Reports module is displayed",() =>
 {
-  cy.get('#app-select').select('Reports')
-  cy.get('#app-select').should('have.value', 'RW_REPORT_APP')
+  cy.get(".css-n4ismd")
+  .contains('Reports')
+  .should('exist', { force: true })
 })
 
 Then("the Route Monitor module is displayed",() =>
 {
-  cy.get('#app-select').select('Route Monitor')
-  cy.get('#app-select').should('have.value', 'ROUTE_MONITOR')
+  cy.get(".css-n4ismd")
+  .contains('Route Monitor')
+  .should('exist', { force: true })
 
 })
 Then("the Traffic Management module is displayed",() =>
 {
 
-  cy.get('#app-select').select('Traffic Management')
-  cy.get('#app-select').should('have.value', 'TM')
+  cy.get(".css-n4ismd")
+  .contains('Traffic Management')
+  .should('exist', { force: true })
 
 
 
@@ -166,6 +197,7 @@ Then("the Route Manager module is displayed",() =>
 
 {
 
+  cy.get('.ons-modules-menu > .ons-mdi', { timeout: 30000 }).should("be.visible")
   cy.get('.ons-modules-menu > .ons-mdi').click()
   cy.wait(500)
   cy.get('.dropdown-menu > .active').should('be.visible')
@@ -173,13 +205,6 @@ Then("the Route Manager module is displayed",() =>
 })
 
 
-
-Then("the Cash and Coordination module is displayed",() =>
-{
-
-  cy.get('[href="/cac"]').should('be.visible')
-
-})
 
 Then("the Cash and Coordination module is displayed",() =>
 {
@@ -223,7 +248,7 @@ Then("the Public Map module is displayed",() =>
 {
 
 
-  cy.get('[href="/pmap"]').should('be.visible')
+  cy.get('[href="/public"]').should('be.visible')
 
 })
 
@@ -256,7 +281,7 @@ Then("my account is {string} in the menu",(displayed) =>
 {
   let is_element_exist = "not.exist"
   displayed == "displayed" ? (is_element_exist = "exist") : (is_element_exist = "not.exist")
-  cy.get('[href="'+Cypress.config().baseUrl+'/account/#settings"]').should(is_element_exist, {
+  cy.get('[href="'+Cypress.config().baseUrl+'/account"]').should(is_element_exist, {
     force: true})
 
 })
@@ -265,7 +290,7 @@ Then("change password is {string} in the menu",(displayed) =>
 
   let is_element_exist = "not.exist"
   displayed == "displayed" ? (is_element_exist = "exist") : (is_element_exist = "not.exist")
-  cy.get('[href="'+Cypress.config().baseUrl+'/account/#reset-password"]').should(is_element_exist, {
+  cy.get('[href="'+Cypress.config().baseUrl+'/account/#/reset-password"]').should(is_element_exist, {
     force: true})
 
 })
@@ -289,7 +314,7 @@ Then("user management is {string} in the menu",(displayed) =>
 })
 When("I click on user management",() =>
 {
-  cy.get('[href="'+Cypress.config().baseUrl+'/user-management"]').click()
+    cy.get('[href="'+Cypress.config().baseUrl+'/user-management"]').click()
 })
 
 When("a data table of names, emails last login,assigned modules and Account status are displayed",() =>
@@ -334,7 +359,7 @@ Then("{string} is {string} in the menu",(text, displayed) =>
 When("I click on Change password",() =>
 
 {
-  cy.get('[href="'+Cypress.config().baseUrl+'/account/#reset-password"]').click({ force:true})
+  cy.get('[href="'+Cypress.config().baseUrl+'/account/#/reset-password"]').click({ force:true})
 
  })
 
@@ -355,7 +380,7 @@ When("I click on Change password",() =>
  When("I click on Sign out",() =>
 
 {
-  cy.get('[href="'+Cypress.config().baseUrl+'/logout"]').click({ force:true})
+  cy.get('[href="'+Cypress.config().baseUrl+'logout"]').click({ force:true})
 
  })
 
@@ -384,12 +409,10 @@ When("I select any active user and open", () => {
 })
 
 When("I select any inactive user and open", () => {
-  cy.get(':nth-child(5) > #td-user-list-name', { timeout: 10000 }).should("exist")
   cy.get(":nth-child(5) > #td-user-list-name").click({ force: true })
 })
 
 When("I select any pending user and open", () => {
-  cy.get(':nth-child(11) > #td-user-list-email', { timeout: 10000 }).should("exist")
   cy.get(":nth-child(11) > #td-user-list-email").click({ force: true })
 })
 
