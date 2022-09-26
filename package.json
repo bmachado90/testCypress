@@ -28,7 +28,7 @@
     "@types/node": "8.10.56",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
-    "cypress": "^9.4.1",
+    "cypress": "^9.7.0",
     "cypress-cucumber-preprocessor": "^4.3.0",
     "cypress-visual-regression": "^1.5.8",
     "eslint": "^7.30.0",
